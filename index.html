@@ -1,0 +1,883 @@
+
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>MahallaInvest — Mahallamiz kelajagi</title>
+
+  <style>
+    :root {
+      --bg: #f6f4ee;
+      --white: #ffffff;
+      --dark: #0f1b2d;
+      --text: #172338;
+      --muted: #6a7179;
+      --accent: #f2a93b;
+      --green: #2fb8a3;
+      --border: #e3e6e4;
+      --radius: 16px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: Inter, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    button, input, select {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    .container {
+      width: min(1100px, 92%);
+      margin: auto;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: var(--dark);
+      color: white;
+    }
+
+    .navbar {
+      min-height: 72px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 18px;
+      flex-wrap: wrap;
+      padding: 14px 0;
+    }
+
+    .logo {
+      font-size: 23px;
+      font-weight: 800;
+      color: white;
+      text-decoration: none;
+    }
+
+    .logo span {
+      color: var(--accent);
+    }
+
+    nav {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    nav a:hover {
+      color: var(--accent);
+    }
+
+    .hero {
+      background: var(--dark);
+      color: white;
+      padding: 65px 0;
+    }
+
+    .hero h1 {
+      max-width: 720px;
+      margin: 0 0 16px;
+      font-size: clamp(34px, 6vw, 58px);
+      line-height: 1.12;
+    }
+
+    .hero h1 span {
+      color: var(--accent);
+    }
+
+    .hero p {
+      max-width: 620px;
+      color: #d0d7e1;
+      font-size: 17px;
+    }
+
+    .button {
+      display: inline-block;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 10px;
+      background: var(--accent);
+      color: var(--dark);
+      font-weight: 700;
+      text-decoration: none;
+      transition: .2s;
+    }
+
+    .button:hover {
+      filter: brightness(.95);
+      transform: translateY(-1px);
+    }
+
+    .button.dark {
+      background: var(--dark);
+      color: white;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 35px;
+    }
+
+    .stat {
+      padding: 18px;
+      background: #1b2b45;
+      border: 1px solid #334158;
+      border-radius: 14px;
+    }
+
+    .stat small {
+      display: block;
+      color: #c4ccda;
+    }
+
+    .stat strong {
+      display: block;
+      margin-top: 5px;
+      font-size: 23px;
+      color: var(--accent);
+    }
+
+    section {
+      padding: 48px 0;
+    }
+
+    .section-heading {
+      margin-bottom: 24px;
+    }
+
+    .section-heading h2 {
+      margin: 0 0 6px;
+      font-size: 29px;
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
+    .toolbar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+
+    .toolbar input {
+      flex: 1;
+      min-width: 200px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #cfd5d2;
+      border-radius: 10px;
+      background: white;
+      color: var(--text);
+      outline: none;
+    }
+
+    input:focus, select:focus {
+      border-color: var(--green);
+    }
+
+    .filters {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 22px;
+    }
+
+    .filter {
+      border: none;
+      border-radius: 30px;
+      padding: 9px 16px;
+      background: #e3e6e4;
+      color: var(--dark);
+      font-weight: 600;
+    }
+
+    .filter.active {
+      background: var(--dark);
+      color: white;
+    }
+
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+    }
+
+    .project-card {
+      display: flex;
+      flex-direction: column;
+      gap: 13px;
+      padding: 21px;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: 0 3px 12px #0f1b2d08;
+    }
+
+    .project-card h3 {
+      margin: 0;
+      font-size: 20px;
+    }
+
+    .project-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .tag {
+      align-self: flex-start;
+      padding: 4px 10px;
+      border-radius: 30px;
+      background: #d8f3ee;
+      color: #16806f;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .tag.waiting {
+      background: #fdecc8;
+      color: #8a5a00;
+    }
+
+    .progress {
+      height: 10px;
+      overflow: hidden;
+      border-radius: 10px;
+      background: #e9ece9;
+    }
+
+    .progress div {
+      height: 100%;
+      border-radius: inherit;
+      background: var(--green);
+      transition: width .3s;
+    }
+
+    .amounts {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      font-size: 13px;
+    }
+
+    .amounts span:last-child {
+      color: var(--muted);
+      text-align: right;
+    }
+
+    .project-card .button {
+      margin-top: auto;
+      text-align: center;
+    }
+
+    .empty {
+      grid-column: 1 / -1;
+      padding: 35px;
+      text-align: center;
+      background: white;
+      border-radius: var(--radius);
+      color: var(--muted);
+    }
+
+    .panel {
+      padding: 25px;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .field.full {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .notice {
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    footer {
+      padding: 28px 0;
+      background: var(--dark);
+      color: #d0d7e1;
+      text-align: center;
+      font-size: 13px;
+    }
+
+    .toast {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      z-index: 100;
+      max-width: calc(100% - 40px);
+      padding: 14px 18px;
+      border-radius: 12px;
+      background: var(--dark);
+      color: white;
+      box-shadow: 0 8px 25px #0002;
+      opacity: 0;
+      transform: translateY(15px);
+      pointer-events: none;
+      transition: .25s;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 650px) {
+      .navbar {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      nav {
+        gap: 14px;
+      }
+
+      .stats {
+        grid-template-columns: 1fr;
+      }
+
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .field.full {
+        grid-column: auto;
+      }
+
+      section {
+        padding: 35px 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="container navbar">
+      <a class="logo" href="#">Mahalla<span>Invest</span></a>
+
+      <nav>
+        <a href="#home">Bosh sahifa</a>
+        <a href="#projects">Loyihalar</a>
+        <a href="#about">Biz haqimizda</a>
+        <a href="#create">Loyiha taklif qilish</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="container">
+        <h1>Mahallamiz kelajagi — <span>o‘z qo‘limizda.</span></h1>
+
+        <p>
+          Mahallangizdagi foydali tashabbuslarni qo‘llab-quvvatlang.
+          Birgalikda obod mahalla, yangi imkoniyatlar va yaxshi kelajak yarating.
+        </p>
+
+        <a class="button" href="#projects">Loyihalarni ko‘rish</a>
+
+        <div class="stats">
+          <div class="stat">
+            <small>Jami loyihalar</small>
+            <strong id="projectCount">0</strong>
+          </div>
+
+          <div class="stat">
+            <small>Yig‘ilgan mablag‘</small>
+            <strong id="totalRaised">0 so‘m</strong>
+          </div>
+
+          <div class="stat">
+            <small>Moliyalashtirilgan loyihalar</small>
+            <strong id="completedCount">0</strong>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects">
+      <div class="container">
+        <div class="section-heading">
+          <h2>Mahalla loyihalari</h2>
+          <p class="muted">
+            O‘zingizga ma’qul tashabbusni tanlang va uning rivojlanishiga hissa qo‘shing.
+          </p>
+        </div>
+
+        <div class="toolbar">
+          <input
+            type="search"
+            id="search"
+            placeholder="Loyihani qidirish..."
+            aria-label="Loyihani qidirish"
+          >
+
+          <select id="sort" aria-label="Saralash">
+            <option value="default">Odatiy tartib</option>
+            <option value="progress">Eng ko‘p mablag‘ yig‘ilgan</option>
+            <option value="needed">Maqsadli mablag‘i yuqori</option>
+          </select>
+        </div>
+
+        <div class="filters" id="filters">
+          <button class="filter active" data-filter="all">Barchasi</button>
+          <button class="filter" data-filter="active">Faol loyihalar</button>
+          <button class="filter" data-filter="completed">Yakunlanganlar</button>
+        </div>
+
+        <div class="project-grid" id="projectList"></div>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="container">
+        <div class="section-heading">
+          <h2>Bu qanday ishlaydi?</h2>
+          <p class="muted">Mahalla tashabbuslarini qo‘llab-quvvatlashning oddiy yo‘li.</p>
+        </div>
+
+        <div class="project-grid">
+          <article class="project-card">
+            <h3>01. Loyihani tanlang</h3>
+            <p>Mahallangiz uchun muhim bo‘lgan tashabbus bilan tanishing.</p>
+          </article>
+
+          <article class="project-card">
+            <h3>02. Hissangizni belgilang</h3>
+            <p>O‘zingiz qo‘llab-quvvatlamoqchi bo‘lgan summani kiriting.</p>
+          </article>
+
+          <article class="project-card">
+            <h3>03. Natijani kuzating</h3>
+            <p>Loyiha uchun belgilangan maqsad va yig‘ilgan mablag‘ni kuzatib boring.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="create">
+      <div class="container">
+        <div class="section-heading">
+          <h2>Yangi loyiha taklif qiling</h2>
+          <p class="muted">
+            Mahallangiz uchun foydali g‘oyangiz bormi? Uni shu yerda taklif qiling.
+          </p>
+        </div>
+
+        <form class="panel" id="projectForm">
+          <div class="form-grid">
+            <div class="field">
+              <label for="title">Loyiha nomi</label>
+              <input id="title" name="title" required maxlength="80"
+                placeholder="Masalan, bolalar maydonchasi">
+            </div>
+
+            <div class="field">
+              <label for="category">Kategoriya</label>
+              <select id="category" name="category" required>
+                <option value="Obodonlashtirish">Obodonlashtirish</option>
+                <option value="Ta’lim">Ta’lim</option>
+                <option value="Sport">Sport</option>
+                <option value="Ekologiya">Ekologiya</option>
+                <option value="Boshqa">Boshqa</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="goal">Kerakli mablag‘ (so‘m)</label>
+              <input id="goal" name="goal" type="number"
+                min="1000" max="1000000000000" step="1000" required
+                placeholder="Masalan, 10000000">
+            </div>
+
+            <div class="field full">
+              <label for="description">Loyiha haqida</label>
+              <input id="description" name="description" required maxlength="300"
+                placeholder="Loyihaning maqsadi va foydasini yozing">
+            </div>
+          </div>
+
+          <p class="notice">
+            Taklif avval demo tarzda saytga qo‘shiladi. Haqiqiy platformada
+            loyiha administrator tomonidan tekshirilishi kerak.
+          </p>
+
+          <button class="button" type="submit">Loyihani qo‘shish</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      © <span id="year"></span> MahallaInvest. Mahallamiz uchun birgalikda.
+    </div>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    "use strict";
+
+    const money = new Intl.NumberFormat("uz-UZ", {
+      maximumFractionDigits: 0
+    });
+
+    const initialProjects = [
+      {
+        id: 1,
+        title: "Bolalar maydonchasi",
+        category: "Obodonlashtirish",
+        description: "Bolalar uchun xavfsiz va zamonaviy o‘yin maydonchasi.",
+        goal: 20000000,
+        raised: 12500000
+      },
+      {
+        id: 2,
+        title: "Mahalla kutubxonasi",
+        category: "Ta’lim",
+        description: "Yoshlar uchun kitoblar va o‘qish joyiga ega kutubxona.",
+        goal: 15000000,
+        raised: 6200000
+      },
+      {
+        id: 3,
+        title: "Sport maydonchasi",
+        category: "Sport",
+        description: "Yoshlar uchun sport bilan shug‘ullanish imkoniyati.",
+        goal: 30000000,
+        raised: 30000000
+      }
+    ];
+
+    const STORAGE_KEY = "mahallainvest_demo_projects";
+
+    let projects = loadProjects();
+    let activeFilter = "all";
+    let toastTimer;
+
+    const projectList = document.getElementById("projectList");
+    const searchInput = document.getElementById("search");
+    const sortSelect = document.getElementById("sort");
+
+    function loadProjects() {
+      try {
+        const saved = localStorage.getItem(STORAGE_KEY);
+
+        if (saved !== null) {
+          const parsed = JSON.parse(saved);
+
+          if (Array.isArray(parsed)) {
+            return parsed;
+          }
+        }
+      } catch (error) {
+        console.warn("Saqlangan ma’lumotni o‘qib bo‘lmadi.", error);
+      }
+
+      return initialProjects.map(project => ({ ...project }));
+    }
+
+    function saveProjects() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(projects));
+        return true;
+      } catch (error) {
+        console.error("Ma’lumotni saqlab bo‘lmadi.", error);
+        showToast("Ma’lumotni saqlash imkoni bo‘lmadi.");
+        return false;
+      }
+    }
+
+    function formatMoney(amount) {
+      return money.format(amount) + " so‘m";
+    }
+
+    function escapeHTML(value) {
+      return String(value).replace(/[&<>"']/g, character => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#039;"
+      })[character]);
+    }
+
+    function showToast(message) {
+      const toast = document.getElementById("toast");
+
+      toast.textContent = message;
+      toast.classList.add("show");
+
+      clearTimeout(toastTimer);
+
+      toastTimer = setTimeout(() => {
+        toast.classList.remove("show");
+      }, 2800);
+    }
+
+    function updateStats() {
+      const totalRaised = projects.reduce(
+        (sum, project) => sum + project.raised, 0
+      );
+
+      const completed = projects.filter(
+        project => project.raised >= project.goal
+      ).length;
+
+      document.getElementById("projectCount").textContent = projects.length;
+      document.getElementById("totalRaised").textContent =
+        formatMoney(totalRaised);
+      document.getElementById("completedCount").textContent = completed;
+    }
+
+    function renderProjects() {
+      const query = searchInput.value.trim().toLocaleLowerCase("uz");
+      let filtered = projects.filter(project => {
+        const matchesSearch = (
+          project.title + " " +
+          project.category + " " +
+          project.description
+        ).toLocaleLowerCase("uz").includes(query);
+
+        const isCompleted = project.raised >= project.goal;
+
+        const matchesFilter =
+          activeFilter === "all" ||
+          (activeFilter === "active" && !isCompleted) ||
+          (activeFilter === "completed" && isCompleted);
+
+        return matchesSearch && matchesFilter;
+      });
+
+      if (sortSelect.value === "progress") {
+        filtered.sort((a, b) =>
+          (b.raised / b.goal) - (a.raised / a.goal)
+        );
+      }
+
+      if (sortSelect.value === "needed") {
+        filtered.sort((a, b) => b.goal - a.goal);
+      }
+
+      if (!filtered.length) {
+        projectList.innerHTML =
+          '<div class="empty">Mos loyiha topilmadi. Boshqa so‘z bilan qidiring.</div>';
+        updateStats();
+        return;
+      }
+
+      projectList.innerHTML = filtered.map(project => {
+        const completed = project.raised >= project.goal;
+        const percent = Math.min(
+          100, Math.round(project.raised / project.goal * 100)
+        );
+
+        return `
+          <article class="project-card">
+            <span class="tag ${completed ? "" : "waiting"}">
+              ${completed ? "Maqsadga yetdi" : "Mablag‘ yig‘ilmoqda"}
+            </span>
+
+            <h3>${escapeHTML(project.title)}</h3>
+            <p>${escapeHTML(project.description)}</p>
+
+            <p><strong>Kategoriya:</strong>
+              ${escapeHTML(project.category)}
+            </p>
+
+            <div class="progress" aria-label="Mablag‘ yig‘ilishi ${percent}%">
+              <div style="width:${percent}%"></div>
+            </div>
+
+            <div class="amounts">
+              <span><strong>${formatMoney(project.raised)}</strong></span>
+              <span>${percent}% / ${formatMoney(project.goal)}</span>
+            </div>
+
+            <button
+              class="button ${completed ? "dark" : ""}"
+              data-invest="${project.id}"
+              ${completed ? "disabled" : ""}
+            >
+              ${completed ? "Maqsadga erishildi" : "Hissa qo‘shish"}
+            </button>
+          </article>
+        `;
+      }).join("");
+
+      updateStats();
+    }
+
+    document.getElementById("filters").addEventListener("click", event => {
+      const button = event.target.closest("[data-filter]");
+
+      if (!button) return;
+
+      activeFilter = button.dataset.filter;
+
+      document.querySelectorAll(".filter").forEach(filter => {
+        filter.classList.toggle("active", filter === button);
+      });
+
+      renderProjects();
+    });
+
+    searchInput.addEventListener("input", renderProjects);
+    sortSelect.addEventListener("change", renderProjects);
+
+    projectList.addEventListener("click", event => {
+      const button = event.target.closest("[data-invest]");
+
+      if (!button) return;
+
+      const project = projects.find(
+        item => item.id === Number(button.dataset.invest)
+      );
+
+      if (!project || project.raised >= project.goal) return;
+
+      const answer = prompt(
+        "Demo hissa summasini so‘mda kiriting:"
+      );
+
+      if (answer === null) return;
+
+      const amount = Number(answer);
+
+      if (!Number.isSafeInteger(amount) || amount <= 0) {
+        showToast("To‘g‘ri musbat butun summa kiriting.");
+        return;
+      }
+
+      const contribution = Math.min(
+        amount, project.goal - project.raised
+      );
+
+      project.raised += contribution;
+
+      if (!saveProjects()) {
+        project.raised -= contribution;
+        return;
+      }
+
+      renderProjects();
+
+      showToast(
+        "Demo hisob yangilandi: " + formatMoney(contribution) +
+        ". Bu haqiqiy to‘lov emas."
+      );
+    });
+
+    document.getElementById("projectForm").addEventListener("submit", event => {
+      event.preventDefault();
+
+      const form = event.currentTarget;
+      const data = new FormData(form);
+
+      const title = String(data.get("title")).trim();
+      const category = String(data.get("category"));
+      const description = String(data.get("description")).trim();
+      const goal = Number(data.get("goal"));
+
+      if (!title || !description ||
+          !Number.isSafeInteger(goal) || goal < 1000) {
+        showToast("Ma’lumotlarni tekshirib, qayta kiriting.");
+        return;
+      }
+
+      const project = {
+        id: Date.now(),
+        title,
+        category,
+        description,
+        goal,
+        raised: 0
+      };
+
+      projects.unshift(project);
+
+      if (!saveProjects()) {
+        projects.shift();
+        return;
+      }
+
+      form.reset();
+      activeFilter = "all";
+
+      document.querySelectorAll(".filter").forEach(button => {
+        button.classList.toggle(
+          "active", button.dataset.filter === "all"
+        );
+      });
+
+      searchInput.value = "";
+      sortSelect.value = "default";
+
+      renderProjects();
+      showToast("Yangi loyiha demo tarzda qo‘shildi.");
+
+      document.getElementById("projects").scrollIntoView({
+        behavior: "smooth"
+      });
+    });
+
+    document.getElementById("year").textContent =
+      new Date().getFullYear();
+
+    renderProjects();
+  </script>
+</body>
+</html>
