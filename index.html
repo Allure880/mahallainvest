@@ -1,47 +1,64 @@
-
 <!DOCTYPE html>
-<html lang="uz">
+<html lang="uz" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+  <meta name="description" content="MahallaInvest — mahallangizdagi foydali tashabbuslarni qo'llab-quvvatlang.">
+  <meta name="theme-color" content="#0f1b2d">
   <title>MahallaInvest — Mahallamiz kelajagi</title>
 
   <style>
     :root {
       --bg: #f6f4ee;
+      --bg-soft: #efece3;
       --white: #ffffff;
       --dark: #0f1b2d;
+      --dark-2: #1b2b45;
       --text: #172338;
       --muted: #6a7179;
       --accent: #f2a93b;
+      --accent-2: #ffc266;
       --green: #2fb8a3;
+      --green-dark: #16806f;
       --border: #e3e6e4;
+      --shadow: 0 3px 12px #0f1b2d08;
+      --shadow-lg: 0 12px 40px #0f1b2d1a;
       --radius: 16px;
+      --radius-sm: 10px;
+      --transition: .25s cubic-bezier(.4,0,.2,1);
     }
 
-    * {
-      box-sizing: border-box;
+    [data-theme="dark"] {
+      --bg: #0b1421;
+      --bg-soft: #101c2e;
+      --white: #14213a;
+      --dark: #060d17;
+      --dark-2: #0e1a2b;
+      --text: #e8edf5;
+      --muted: #8b96a8;
+      --border: #1f2d44;
+      --shadow: 0 3px 12px #0003;
+      --shadow-lg: 0 12px 40px #0006;
     }
 
-    html {
-      scroll-behavior: smooth;
-    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
 
     body {
       margin: 0;
-      font-family: Inter, Arial, sans-serif;
+      font-family: Inter, system-ui, -apple-system, Arial, sans-serif;
       background: var(--bg);
       color: var(--text);
       line-height: 1.6;
+      transition: background var(--transition), color var(--transition);
     }
 
-    button, input, select {
-      font: inherit;
-    }
+    button, input, select, textarea { font: inherit; }
+    button { cursor: pointer; }
 
-    button {
-      cursor: pointer;
+    :focus-visible {
+      outline: 3px solid var(--green);
+      outline-offset: 2px;
     }
 
     .container {
@@ -49,12 +66,15 @@
       margin: auto;
     }
 
+    /* ===== HEADER ===== */
     header {
       position: sticky;
       top: 0;
-      z-index: 10;
+      z-index: 50;
       background: var(--dark);
       color: white;
+      box-shadow: 0 2px 20px #0002;
+      backdrop-filter: blur(8px);
     }
 
     .navbar {
@@ -63,8 +83,8 @@
       justify-content: space-between;
       align-items: center;
       gap: 18px;
-      flex-wrap: wrap;
       padding: 14px 0;
+      position: relative;
     }
 
     .logo {
@@ -72,32 +92,106 @@
       font-weight: 800;
       color: white;
       text-decoration: none;
+      letter-spacing: -.5px;
     }
 
-    .logo span {
-      color: var(--accent);
-    }
+    .logo span { color: var(--accent); }
 
     nav {
       display: flex;
-      gap: 20px;
+      gap: 6px;
+      align-items: center;
       flex-wrap: wrap;
     }
 
     nav a {
-      color: white;
+      color: #d0d7e1;
       text-decoration: none;
       font-size: 14px;
+      font-weight: 500;
+      padding: 8px 14px;
+      border-radius: var(--radius-sm);
+      transition: var(--transition);
     }
 
     nav a:hover {
       color: var(--accent);
+      background: #ffffff0d;
     }
 
+    .nav-actions {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .icon-btn {
+      width: 40px;
+      height: 40px;
+      display: grid;
+      place-items: center;
+      border: 1px solid #ffffff1a;
+      border-radius: var(--radius-sm);
+      background: #ffffff0a;
+      color: white;
+      font-size: 18px;
+      transition: var(--transition);
+    }
+
+    .icon-btn:hover {
+      background: #ffffff1a;
+      transform: translateY(-1px);
+    }
+
+    .hamburger { display: none; }
+
+    /* ===== HERO ===== */
     .hero {
+      position: relative;
       background: var(--dark);
       color: white;
-      padding: 65px 0;
+      padding: 80px 0 70px;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 15% 20%, #f2a93b22 0%, transparent 45%),
+        radial-gradient(circle at 85% 80%, #2fb8a322 0%, transparent 45%);
+      pointer-events: none;
+    }
+
+    .hero > .container { position: relative; }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      margin-bottom: 20px;
+      border: 1px solid #f2a93b55;
+      border-radius: 30px;
+      background: #f2a93b14;
+      color: var(--accent-2);
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .hero-badge::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; box-shadow: 0 0 0 0 #f2a93b88; }
+      50% { opacity: .7; box-shadow: 0 0 0 6px #f2a93b00; }
     }
 
     .hero h1 {
@@ -105,134 +199,259 @@
       margin: 0 0 16px;
       font-size: clamp(34px, 6vw, 58px);
       line-height: 1.12;
+      letter-spacing: -1px;
     }
 
     .hero h1 span {
-      color: var(--accent);
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
 
     .hero p {
       max-width: 620px;
       color: #d0d7e1;
       font-size: 17px;
+      margin: 0 0 28px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 40px;
     }
 
     .button {
-      display: inline-block;
-      padding: 12px 20px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 13px 22px;
       border: none;
-      border-radius: 10px;
+      border-radius: var(--radius-sm);
       background: var(--accent);
       color: var(--dark);
       font-weight: 700;
       text-decoration: none;
-      transition: .2s;
+      transition: var(--transition);
+      box-shadow: 0 4px 14px #f2a93b33;
     }
 
     .button:hover {
-      filter: brightness(.95);
-      transform: translateY(-1px);
+      filter: brightness(1.05);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px #f2a93b44;
+    }
+
+    .button:active { transform: translateY(0); }
+
+    .button.ghost {
+      background: transparent;
+      color: white;
+      border: 1px solid #ffffff33;
+      box-shadow: none;
+    }
+
+    .button.ghost:hover {
+      background: #ffffff0d;
+      border-color: #ffffff55;
     }
 
     .button.dark {
       background: var(--dark);
       color: white;
+      box-shadow: 0 4px 14px #0003;
     }
 
+    [data-theme="dark"] .button.dark {
+      background: var(--accent);
+      color: var(--dark);
+    }
+
+    .button.danger {
+      background: #e05252;
+      color: white;
+      box-shadow: 0 4px 14px #e0525233;
+    }
+
+    .button.danger:hover { background: #d04444; }
+
+    .button.outline {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text);
+      box-shadow: none;
+    }
+
+    .button.outline:hover { border-color: var(--accent); }
+
+    .button:disabled {
+      opacity: .5;
+      cursor: not-allowed;
+      transform: none !important;
+    }
+
+    .button.small {
+      padding: 9px 14px;
+      font-size: 13px;
+    }
+
+    /* ===== STATS ===== */
     .stats {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 14px;
-      margin-top: 35px;
     }
 
     .stat {
-      padding: 18px;
+      padding: 20px;
       background: #1b2b45;
       border: 1px solid #334158;
       border-radius: 14px;
+      transition: var(--transition);
+    }
+
+    .stat:hover {
+      transform: translateY(-3px);
+      border-color: var(--accent);
+      box-shadow: 0 8px 24px #0004;
     }
 
     .stat small {
-      display: block;
+      display: flex;
+      align-items: center;
+      gap: 6px;
       color: #c4ccda;
+      font-size: 13px;
     }
 
     .stat strong {
       display: block;
-      margin-top: 5px;
-      font-size: 23px;
+      margin-top: 6px;
+      font-size: 26px;
       color: var(--accent);
+      font-variant-numeric: tabular-nums;
     }
 
-    section {
-      padding: 48px 0;
-    }
+    /* ===== SECTIONS ===== */
+    section { padding: 60px 0; }
+    section:nth-child(even) { background: var(--bg-soft); }
 
-    .section-heading {
-      margin-bottom: 24px;
-    }
+    .section-heading { margin-bottom: 28px; }
 
     .section-heading h2 {
-      margin: 0 0 6px;
-      font-size: 29px;
+      margin: 0 0 8px;
+      font-size: clamp(24px, 4vw, 32px);
+      letter-spacing: -.5px;
     }
 
-    .muted {
-      color: var(--muted);
-    }
+    .section-heading p { margin: 0; max-width: 640px; }
+    .muted { color: var(--muted); }
 
+    /* ===== TOOLBAR ===== */
     .toolbar {
       display: flex;
       align-items: center;
       gap: 12px;
       flex-wrap: wrap;
-      margin-bottom: 24px;
+      margin-bottom: 18px;
     }
 
-    .toolbar input {
+    .toolbar input { flex: 1; min-width: 200px; }
+
+    .search-wrap {
+      position: relative;
       flex: 1;
       min-width: 200px;
     }
 
-    input, select {
+    .search-wrap input { padding-left: 42px; }
+
+    .search-wrap::before {
+      content: "🔍";
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 15px;
+      opacity: .6;
+      pointer-events: none;
+    }
+
+    input, select, textarea {
       width: 100%;
-      padding: 12px;
+      padding: 12px 14px;
       border: 1px solid #cfd5d2;
-      border-radius: 10px;
-      background: white;
+      border-radius: var(--radius-sm);
+      background: var(--white);
       color: var(--text);
       outline: none;
+      transition: var(--transition);
     }
 
-    input:focus, select:focus {
+    [data-theme="dark"] input,
+    [data-theme="dark"] select,
+    [data-theme="dark"] textarea {
+      border-color: var(--border);
+    }
+
+    input:focus, select:focus, textarea:focus {
       border-color: var(--green);
+      box-shadow: 0 0 0 3px #2fb8a322;
     }
 
+    select { cursor: pointer; }
+
+    .data-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+
+    /* ===== FILTERS ===== */
     .filters {
       display: flex;
       gap: 8px;
       flex-wrap: wrap;
-      margin-bottom: 22px;
+      margin-bottom: 26px;
     }
 
     .filter {
-      border: none;
+      border: 1px solid transparent;
       border-radius: 30px;
-      padding: 9px 16px;
+      padding: 9px 18px;
       background: #e3e6e4;
       color: var(--dark);
       font-weight: 600;
+      font-size: 14px;
+      transition: var(--transition);
     }
+
+    [data-theme="dark"] .filter {
+      background: var(--dark-2);
+      color: var(--text);
+    }
+
+    .filter:hover { transform: translateY(-1px); }
 
     .filter.active {
       background: var(--dark);
       color: white;
+      box-shadow: 0 4px 12px #0f1b2d33;
     }
 
+    [data-theme="dark"] .filter.active {
+      background: var(--accent);
+      color: var(--dark);
+    }
+
+    /* ===== PROJECT GRID ===== */
     .project-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
       gap: 18px;
     }
 
@@ -240,16 +459,32 @@
       display: flex;
       flex-direction: column;
       gap: 13px;
-      padding: 21px;
+      padding: 22px;
       background: var(--white);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      box-shadow: 0 3px 12px #0f1b2d08;
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+      animation: fadeUp .45s both;
+      position: relative;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .project-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--green);
     }
 
     .project-card h3 {
       margin: 0;
       font-size: 20px;
+      letter-spacing: -.3px;
+      padding-right: 32px;
     }
 
     .project-card p {
@@ -258,12 +493,23 @@
       font-size: 14px;
     }
 
+    .card-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
     .tag {
-      align-self: flex-start;
-      padding: 4px 10px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 11px;
       border-radius: 30px;
       background: #d8f3ee;
-      color: #16806f;
+      color: var(--green-dark);
       font-size: 12px;
       font-weight: 700;
     }
@@ -273,18 +519,62 @@
       color: #8a5a00;
     }
 
+    [data-theme="dark"] .tag { background: #2fb8a322; color: #4dd4bd; }
+    [data-theme="dark"] .tag.waiting { background: #f2a93b22; color: var(--accent); }
+
+    .card-delete {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      width: 30px;
+      height: 30px;
+      display: grid;
+      place-items: center;
+      border: none;
+      border-radius: 50%;
+      background: transparent;
+      color: var(--muted);
+      font-size: 16px;
+      opacity: .6;
+      transition: var(--transition);
+    }
+
+    .card-delete:hover {
+      background: #e0525222;
+      color: #e05252;
+      opacity: 1;
+      transform: rotate(8deg) scale(1.1);
+    }
+
     .progress {
       height: 10px;
       overflow: hidden;
       border-radius: 10px;
       background: #e9ece9;
+      position: relative;
     }
+
+    [data-theme="dark"] .progress { background: #1f2d44; }
 
     .progress div {
       height: 100%;
       border-radius: inherit;
-      background: var(--green);
-      transition: width .3s;
+      background: linear-gradient(90deg, var(--green), #4dd4bd);
+      transition: width .8s cubic-bezier(.4,0,.2,1);
+      position: relative;
+    }
+
+    .progress div::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, transparent, #ffffff55, transparent);
+      animation: shimmer 2s infinite;
+    }
+
+    @keyframes shimmer {
+      from { transform: translateX(-100%); }
+      to { transform: translateX(100%); }
     }
 
     .amounts {
@@ -299,25 +589,75 @@
       text-align: right;
     }
 
-    .project-card .button {
+    .card-actions {
+      display: flex;
+      gap: 8px;
       margin-top: auto;
-      text-align: center;
     }
+
+    .card-actions .button { flex: 1; padding: 11px 14px; font-size: 14px; }
 
     .empty {
       grid-column: 1 / -1;
-      padding: 35px;
+      padding: 50px 30px;
       text-align: center;
-      background: white;
+      background: var(--white);
+      border: 2px dashed var(--border);
       border-radius: var(--radius);
       color: var(--muted);
     }
 
+    .empty-icon { font-size: 42px; margin-bottom: 10px; opacity: .5; }
+
+    /* ===== TOP PROJECTS ===== */
+    .top-list {
+      display: grid;
+      gap: 10px;
+      margin-top: 24px;
+    }
+
+    .top-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 18px;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      transition: var(--transition);
+    }
+
+    .top-item:hover {
+      border-color: var(--accent);
+      transform: translateX(4px);
+    }
+
+    .top-rank {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--accent);
+      min-width: 32px;
+      text-align: center;
+    }
+
+    .top-info { flex: 1; }
+    .top-info strong { display: block; font-size: 15px; }
+    .top-info small { color: var(--muted); font-size: 12px; }
+
+    .top-amount {
+      font-weight: 700;
+      color: var(--green);
+      font-size: 14px;
+      white-space: nowrap;
+    }
+
+    /* ===== PANEL / FORM ===== */
     .panel {
-      padding: 25px;
-      background: white;
+      padding: 30px;
+      background: var(--white);
       border: 1px solid var(--border);
       border-radius: var(--radius);
+      box-shadow: var(--shadow);
     }
 
     .form-grid {
@@ -326,9 +666,7 @@
       gap: 18px;
     }
 
-    .field.full {
-      grid-column: 1 / -1;
-    }
+    .field.full { grid-column: 1 / -1; }
 
     label {
       display: block;
@@ -337,66 +675,307 @@
       font-weight: 700;
     }
 
+    .field-error {
+      display: none;
+      margin-top: 5px;
+      color: #e05252;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .field.invalid input,
+    .field.invalid select,
+    .field.invalid textarea {
+      border-color: #e05252;
+      box-shadow: 0 0 0 3px #e0525222;
+    }
+
+    .field.invalid .field-error { display: block; }
+
     .notice {
-      margin-top: 14px;
+      margin: 16px 0;
+      padding: 12px 16px;
+      background: #f2a93b14;
+      border-left: 3px solid var(--accent);
+      border-radius: 8px;
       color: var(--muted);
       font-size: 13px;
     }
 
+    /* ===== FOOTER ===== */
     footer {
-      padding: 28px 0;
+      padding: 40px 0 30px;
       background: var(--dark);
       color: #d0d7e1;
-      text-align: center;
       font-size: 13px;
     }
 
+    footer .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 30px;
+      margin-bottom: 30px;
+    }
+
+    footer h4 {
+      color: white;
+      margin: 0 0 12px;
+      font-size: 15px;
+    }
+
+    footer ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 8px;
+    }
+
+    footer a {
+      color: #d0d7e1;
+      text-decoration: none;
+      transition: var(--transition);
+    }
+
+    footer a:hover { color: var(--accent); }
+
+    footer .copyright {
+      padding-top: 24px;
+      border-top: 1px solid #ffffff1a;
+      text-align: center;
+      color: #8b96a8;
+    }
+
+    /* ===== TOAST ===== */
     .toast {
       position: fixed;
       right: 20px;
       bottom: 20px;
       z-index: 100;
       max-width: calc(100% - 40px);
-      padding: 14px 18px;
+      padding: 14px 20px;
       border-radius: 12px;
       background: var(--dark);
       color: white;
-      box-shadow: 0 8px 25px #0002;
+      box-shadow: 0 8px 30px #0004;
       opacity: 0;
-      transform: translateY(15px);
+      transform: translateY(20px) scale(.95);
       pointer-events: none;
-      transition: .25s;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 500;
     }
 
     .toast.show {
       opacity: 1;
-      transform: translateY(0);
+      transform: translateY(0) scale(1);
+      pointer-events: auto;
     }
 
-    @media (max-width: 650px) {
-      .navbar {
-        align-items: flex-start;
-        flex-direction: column;
-      }
+    .toast.success { border-left: 4px solid var(--green); }
+    .toast.error { border-left: 4px solid #e05252; }
+    .toast.info { border-left: 4px solid var(--accent); }
+
+    .toast-undo {
+      margin-left: 8px;
+      padding: 4px 10px;
+      border: 1px solid #ffffff44;
+      border-radius: 6px;
+      background: transparent;
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .toast-undo:hover { background: #ffffff11; }
+
+    /* ===== MODAL ===== */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 90;
+      display: grid;
+      place-items: center;
+      padding: 20px;
+      background: #0f1b2dcc;
+      backdrop-filter: blur(4px);
+      opacity: 0;
+      pointer-events: none;
+      transition: var(--transition);
+    }
+
+    .modal-overlay.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal {
+      width: min(480px, 100%);
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 28px;
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-lg);
+      transform: translateY(20px) scale(.96);
+      transition: var(--transition);
+    }
+
+    .modal-overlay.open .modal {
+      transform: translateY(0) scale(1);
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .modal-header h3 {
+      margin: 0;
+      font-size: 22px;
+      line-height: 1.3;
+    }
+
+    .modal-close {
+      flex-shrink: 0;
+      width: 36px;
+      height: 36px;
+      display: grid;
+      place-items: center;
+      border: none;
+      border-radius: 50%;
+      background: var(--bg-soft);
+      color: var(--text);
+      font-size: 20px;
+      transition: var(--transition);
+    }
+
+    .modal-close:hover {
+      background: #e0525222;
+      color: #e05252;
+      transform: rotate(90deg);
+    }
+
+    .modal-body { color: var(--muted); font-size: 14px; }
+
+    .modal-body .detail-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .modal-body .detail-row:last-child { border-bottom: none; }
+    .modal-body .detail-row strong { color: var(--text); }
+
+    .amount-input-wrap {
+      position: relative;
+      margin: 16px 0;
+    }
+
+    .amount-input-wrap input {
+      padding-right: 60px;
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    .amount-input-wrap::after {
+      content: "so'm";
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 600;
+      pointer-events: none;
+    }
+
+    .quick-amounts {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+
+    .quick-amounts button {
+      padding: 8px 14px;
+      border: 1px solid var(--border);
+      border-radius: 30px;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 13px;
+      font-weight: 600;
+      transition: var(--transition);
+    }
+
+    .quick-amounts button:hover {
+      border-color: var(--accent);
+      background: #f2a93b14;
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .modal-actions .button { flex: 1; }
+
+    /* ===== MOBILE ===== */
+    @media (max-width: 760px) {
+      .hamburger { display: grid; }
 
       nav {
-        gap: 14px;
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 4px;
+        padding: 12px;
+        background: var(--dark-2);
+        border-top: 1px solid #ffffff1a;
+        box-shadow: 0 8px 20px #0005;
+        z-index: 60;
       }
 
-      .stats {
+      nav.open { display: flex; }
+      nav a { padding: 12px 16px; }
+
+      .stats { grid-template-columns: 1fr; }
+      .form-grid { grid-template-columns: 1fr; }
+      .field.full { grid-column: auto; }
+      section { padding: 40px 0; }
+      .hero { padding: 50px 0; }
+      .hero-actions .button { width: 100%; }
+
+      .toast {
+        left: 20px;
+        right: 20px;
+        max-width: none;
+      }
+
+      .panel { padding: 20px; }
+
+      footer .footer-grid {
         grid-template-columns: 1fr;
+        gap: 24px;
       }
+    }
 
-      .form-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .field.full {
-        grid-column: auto;
-      }
-
-      section {
-        padding: 35px 0;
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: .01ms !important;
+        transition-duration: .01ms !important;
       }
     }
   </style>
@@ -407,154 +986,198 @@
     <div class="container navbar">
       <a class="logo" href="#">Mahalla<span>Invest</span></a>
 
-      <nav>
+      <nav id="mainNav">
         <a href="#home">Bosh sahifa</a>
         <a href="#projects">Loyihalar</a>
         <a href="#about">Biz haqimizda</a>
         <a href="#create">Loyiha taklif qilish</a>
       </nav>
+
+      <div class="nav-actions">
+        <button class="icon-btn" id="themeToggle" aria-label="Tungi rejim" title="Tungi rejim">🌙</button>
+        <button class="icon-btn hamburger" id="hamburger" aria-label="Menyu" aria-expanded="false">☰</button>
+      </div>
     </div>
   </header>
 
   <main>
+    <!-- HERO -->
     <section class="hero" id="home">
       <div class="container">
-        <h1>Mahallamiz kelajagi — <span>o‘z qo‘limizda.</span></h1>
+        <div class="hero-badge">Mahalla tashabbuslari platformasi</div>
+
+        <h1>Mahallamiz kelajagi — <span>o'z qo'limizda.</span></h1>
 
         <p>
-          Mahallangizdagi foydali tashabbuslarni qo‘llab-quvvatlang.
+          Mahallangizdagi foydali tashabbuslarni qo'llab-quvvatlang.
           Birgalikda obod mahalla, yangi imkoniyatlar va yaxshi kelajak yarating.
         </p>
 
-        <a class="button" href="#projects">Loyihalarni ko‘rish</a>
+        <div class="hero-actions">
+          <a class="button" href="#projects">Loyihalarni ko'rish →</a>
+          <a class="button ghost" href="#create">Loyiha taklif qilish</a>
+        </div>
 
         <div class="stats">
           <div class="stat">
-            <small>Jami loyihalar</small>
-            <strong id="projectCount">0</strong>
+            <small>📊 Jami loyihalar</small>
+            <strong id="projectCount" data-count="0">0</strong>
           </div>
-
           <div class="stat">
-            <small>Yig‘ilgan mablag‘</small>
-            <strong id="totalRaised">0 so‘m</strong>
+            <small>💰 Yig'ilgan mablag'</small>
+            <strong id="totalRaised">0 so'm</strong>
           </div>
-
           <div class="stat">
-            <small>Moliyalashtirilgan loyihalar</small>
-            <strong id="completedCount">0</strong>
+            <small>✅ Moliyalashtirilgan</small>
+            <strong id="completedCount" data-count="0">0</strong>
           </div>
         </div>
       </div>
     </section>
 
+    <!-- PROJECTS -->
     <section id="projects">
       <div class="container">
         <div class="section-heading">
           <h2>Mahalla loyihalari</h2>
           <p class="muted">
-            O‘zingizga ma’qul tashabbusni tanlang va uning rivojlanishiga hissa qo‘shing.
+            O'zingizga ma'qul tashabbusni tanlang va uning rivojlanishiga hissa qo'shing.
           </p>
         </div>
 
         <div class="toolbar">
-          <input
-            type="search"
-            id="search"
-            placeholder="Loyihani qidirish..."
-            aria-label="Loyihani qidirish"
-          >
+          <div class="search-wrap">
+            <input type="search" id="search" placeholder="Loyihani qidirish... ( / )"
+              aria-label="Loyihani qidirish" autocomplete="off">
+          </div>
 
-          <select id="sort" aria-label="Saralash">
+          <select id="sort" aria-label="Saralash" style="max-width: 260px;">
             <option value="default">Odatiy tartib</option>
-            <option value="progress">Eng ko‘p mablag‘ yig‘ilgan</option>
-            <option value="needed">Maqsadli mablag‘i yuqori</option>
+            <option value="progress">Eng ko'p yig'ilgan</option>
+            <option value="needed">Maqsad yuqori</option>
+            <option value="newest">Eng yangi</option>
+            <option value="oldest">Eng eski</option>
           </select>
+        </div>
+
+        <div class="data-actions">
+          <button class="button outline small" id="exportBtn" title="JSON faylga yuklab olish">
+            💾 Eksport
+          </button>
+          <button class="button outline small" id="importBtn" title="JSON fayldan yuklash">
+            📥 Import
+          </button>
+          <input type="file" id="importFile" accept=".json" hidden>
+          <button class="button outline small" id="resetBtn" title="Boshlang'ich holatga qaytarish">
+            🔄 Reset
+          </button>
         </div>
 
         <div class="filters" id="filters">
           <button class="filter active" data-filter="all">Barchasi</button>
-          <button class="filter" data-filter="active">Faol loyihalar</button>
-          <button class="filter" data-filter="completed">Yakunlanganlar</button>
+          <button class="filter" data-filter="active">Faol</button>
+          <button class="filter" data-filter="completed">Yakunlangan</button>
         </div>
 
         <div class="project-grid" id="projectList"></div>
       </div>
     </section>
 
+    <!-- TOP PROJECTS -->
+    <section id="top">
+      <div class="container">
+        <div class="section-heading">
+          <h2>🏆 Eng faol loyihalar</h2>
+          <p class="muted">Yig'ilgan mablag' bo'yicha top 5 loyiha.</p>
+        </div>
+        <div class="top-list" id="topList"></div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
     <section id="about">
       <div class="container">
         <div class="section-heading">
           <h2>Bu qanday ishlaydi?</h2>
-          <p class="muted">Mahalla tashabbuslarini qo‘llab-quvvatlashning oddiy yo‘li.</p>
+          <p class="muted">Mahalla tashabbuslarini qo'llab-quvvatlashning oddiy yo'li.</p>
         </div>
 
         <div class="project-grid">
-          <article class="project-card">
-            <h3>01. Loyihani tanlang</h3>
-            <p>Mahallangiz uchun muhim bo‘lgan tashabbus bilan tanishing.</p>
+          <article class="project-card" style="animation-delay:.05s">
+            <span class="tag">Qadam 01</span>
+            <h3>Loyihani tanlang</h3>
+            <p>Mahallangiz uchun muhim bo'lgan tashabbus bilan tanishing va maqsadini o'rganing.</p>
           </article>
 
-          <article class="project-card">
-            <h3>02. Hissangizni belgilang</h3>
-            <p>O‘zingiz qo‘llab-quvvatlamoqchi bo‘lgan summani kiriting.</p>
+          <article class="project-card" style="animation-delay:.15s">
+            <span class="tag">Qadam 02</span>
+            <h3>Hissa qo'shing</h3>
+            <p>O'zingiz qo'llab-quvvatlamoqchi bo'lgan summani kiriting — istalgan miqdorda.</p>
           </article>
 
-          <article class="project-card">
-            <h3>03. Natijani kuzating</h3>
-            <p>Loyiha uchun belgilangan maqsad va yig‘ilgan mablag‘ni kuzatib boring.</p>
+          <article class="project-card" style="animation-delay:.25s">
+            <span class="tag">Qadam 03</span>
+            <h3>Natijani kuzating</h3>
+            <p>Loyiha uchun belgilangan maqsad va yig'ilgan mablag'ni real vaqtda kuzatib boring.</p>
           </article>
         </div>
       </div>
     </section>
 
+    <!-- CREATE -->
     <section id="create">
       <div class="container">
         <div class="section-heading">
           <h2>Yangi loyiha taklif qiling</h2>
           <p class="muted">
-            Mahallangiz uchun foydali g‘oyangiz bormi? Uni shu yerda taklif qiling.
+            Mahallangiz uchun foydali g'oyangiz bormi? Uni shu yerda taklif qiling.
           </p>
         </div>
 
-        <form class="panel" id="projectForm">
+        <form class="panel" id="projectForm" novalidate>
           <div class="form-grid">
             <div class="field">
               <label for="title">Loyiha nomi</label>
               <input id="title" name="title" required maxlength="80"
                 placeholder="Masalan, bolalar maydonchasi">
+              <span class="field-error">Loyiha nomini kiriting (kamida 3 ta belgi).</span>
             </div>
 
             <div class="field">
               <label for="category">Kategoriya</label>
               <select id="category" name="category" required>
-                <option value="Obodonlashtirish">Obodonlashtirish</option>
-                <option value="Ta’lim">Ta’lim</option>
-                <option value="Sport">Sport</option>
-                <option value="Ekologiya">Ekologiya</option>
-                <option value="Boshqa">Boshqa</option>
+                <option value="">Tanlang...</option>
+                <option value="Obodonlashtirish">🌳 Obodonlashtirish</option>
+                <option value="Ta'lim">📚 Ta'lim</option>
+                <option value="Sport">⚽ Sport</option>
+                <option value="Ekologiya">🌱 Ekologiya</option>
+                <option value="Boshqa">📌 Boshqa</option>
               </select>
+              <span class="field-error">Kategoriyani tanlang.</span>
             </div>
 
-            <div class="field">
-              <label for="goal">Kerakli mablag‘ (so‘m)</label>
+            <div class="field full">
+              <label for="goal">Kerakli mablag' (so'm)</label>
               <input id="goal" name="goal" type="number"
                 min="1000" max="1000000000000" step="1000" required
                 placeholder="Masalan, 10000000">
+              <span class="field-error">Kamida 1 000 so'm kiriting.</span>
             </div>
 
             <div class="field full">
               <label for="description">Loyiha haqida</label>
               <input id="description" name="description" required maxlength="300"
                 placeholder="Loyihaning maqsadi va foydasini yozing">
+              <span class="field-error">Tavsifni kiriting (kamida 10 ta belgi).</span>
             </div>
           </div>
 
           <p class="notice">
-            Taklif avval demo tarzda saytga qo‘shiladi. Haqiqiy platformada
+            ℹ️ Taklif avval demo tarzda saytga qo'shiladi. Haqiqiy platformada
             loyiha administrator tomonidan tekshirilishi kerak.
           </p>
 
-          <button class="button" type="submit">Loyihani qo‘shish</button>
+          <button class="button" type="submit">➕ Loyihani qo'shish</button>
         </form>
       </div>
     </section>
@@ -562,269 +1185,551 @@
 
   <footer>
     <div class="container">
-      © <span id="year"></span> MahallaInvest. Mahallamiz uchun birgalikda.
+      <div class="footer-grid">
+        <div>
+          <h4>Mahalla<span style="color:var(--accent)">Invest</span></h4>
+          <p style="margin:0;color:#8b96a8;max-width:320px">
+            Mahallangizdagi foydali tashabbuslarni qo'llab-quvvatlash
+            platformasi. Birgalikda obod mahalla yaratamiz.
+          </p>
+        </div>
+
+        <div>
+          <h4>Sahifalar</h4>
+          <ul>
+            <li><a href="#home">Bosh sahifa</a></li>
+            <li><a href="#projects">Loyihalar</a></li>
+            <li><a href="#about">Biz haqimizda</a></li>
+            <li><a href="#create">Loyiha taklif qilish</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4>Aloqa</h4>
+          <ul>
+            <li><a href="mailto:info@mahallainvest.uz">📧 info@mahallainvest.uz</a></li>
+            <li><a href="tel:+998901234567">📞 +998 90 123 45 67</a></li>
+            <li><a href="#">📍 Toshkent, O'zbekiston</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="copyright">
+        © <span id="year">2026</span> MahallaInvest. Mahallamiz uchun birgalikda.
+      </div>
     </div>
   </footer>
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
+  <!-- Hissa qo'shish modali -->
+  <div class="modal-overlay" id="investModal" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true">
+      <div class="modal-header">
+        <h3>Hissa qo'shish</h3>
+        <button class="modal-close" data-close-modal aria-label="Yopish">✕</button>
+      </div>
+      <div class="modal-body">
+        <p id="investProjectName" style="margin-top:0;font-weight:700;color:var(--text)"></p>
+        <p id="investRemaining" style="font-size:13px"></p>
+
+        <div class="quick-amounts" id="quickAmounts">
+          <button type="button" data-quick="100000">100 000</button>
+          <button type="button" data-quick="500000">500 000</button>
+          <button type="button" data-quick="1000000">1 000 000</button>
+          <button type="button" data-quick="max">Maksimal</button>
+        </div>
+
+        <div class="amount-input-wrap">
+          <input type="number" id="investAmount" min="1000" step="1000"
+            placeholder="Summani kiriting" inputmode="numeric">
+        </div>
+        <span class="field-error" id="investError" style="display:none"></span>
+
+        <div class="modal-actions">
+          <button class="button ghost" data-close-modal
+            style="background:var(--bg-soft);color:var(--text);border:none">
+            Bekor qilish
+          </button>
+          <button class="button" id="confirmInvest">Tasdiqlash</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loyiha tafsilotlari modali -->
+  <div class="modal-overlay" id="detailModal" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true">
+      <div class="modal-header">
+        <h3 id="detailTitle">Loyiha tafsilotlari</h3>
+        <button class="modal-close" data-close-modal aria-label="Yopish">✕</button>
+      </div>
+      <div class="modal-body" id="detailBody"></div>
+    </div>
+  </div>
+
   <script>
     "use strict";
 
-    const money = new Intl.NumberFormat("uz-UZ", {
-      maximumFractionDigits: 0
-    });
+    /* ============ SOZLAMALAR ============ */
+    const money = new Intl.NumberFormat("uz-UZ", { maximumFractionDigits: 0 });
+    const STORAGE_KEY = "mahallainvest_demo_projects";
+    const THEME_KEY = "mahallainvest_theme";
+
+    const CATEGORY_ICONS = {
+      "Obodonlashtirish": "🌳",
+      "Ta'lim": "📚",
+      "Sport": "⚽",
+      "Ekologiya": "🌱",
+      "Boshqa": "📌"
+    };
 
     const initialProjects = [
-      {
-        id: 1,
-        title: "Bolalar maydonchasi",
-        category: "Obodonlashtirish",
-        description: "Bolalar uchun xavfsiz va zamonaviy o‘yin maydonchasi.",
-        goal: 20000000,
-        raised: 12500000
-      },
-      {
-        id: 2,
-        title: "Mahalla kutubxonasi",
-        category: "Ta’lim",
-        description: "Yoshlar uchun kitoblar va o‘qish joyiga ega kutubxona.",
-        goal: 15000000,
-        raised: 6200000
-      },
-      {
-        id: 3,
-        title: "Sport maydonchasi",
-        category: "Sport",
-        description: "Yoshlar uchun sport bilan shug‘ullanish imkoniyati.",
-        goal: 30000000,
-        raised: 30000000
-      }
+      { id: 1, title: "Bolalar maydonchasi", category: "Obodonlashtirish",
+        description: "Bolalar uchun xavfsiz va zamonaviy o'yin maydonchasi.",
+        goal: 20000000, raised: 12500000, createdAt: Date.now() - 86400000 * 5 },
+      { id: 2, title: "Mahalla kutubxonasi", category: "Ta'lim",
+        description: "Yoshlar uchun kitoblar va o'qish joyiga ega kutubxona.",
+        goal: 15000000, raised: 6200000, createdAt: Date.now() - 86400000 * 3 },
+      { id: 3, title: "Sport maydonchasi", category: "Sport",
+        description: "Yoshlar uchun sport bilan shug'ullanish imkoniyati.",
+        goal: 30000000, raised: 30000000, createdAt: Date.now() - 86400000 }
     ];
 
-    const STORAGE_KEY = "mahallainvest_demo_projects";
-
-    let projects = loadProjects();
+    /* ============ HOLAT ============ */
+    let projects = [];
     let activeFilter = "all";
     let toastTimer;
+    let currentInvestId = null;
+    let lastDeleted = null;
 
-    const projectList = document.getElementById("projectList");
-    const searchInput = document.getElementById("search");
-    const sortSelect = document.getElementById("sort");
+    /* ============ DOM ============ */
+    const $ = id => document.getElementById(id);
+    const projectList = $("projectList");
+    const searchInput = $("search");
+    const sortSelect = $("sort");
+    const toast = $("toast");
 
+    /* ============ SAQLASH / YUKLASH ============ */
     function loadProjects() {
       try {
         const saved = localStorage.getItem(STORAGE_KEY);
-
         if (saved !== null) {
           const parsed = JSON.parse(saved);
-
-          if (Array.isArray(parsed)) {
-            return parsed;
-          }
+          if (Array.isArray(parsed)) return parsed;
         }
-      } catch (error) {
-        console.warn("Saqlangan ma’lumotni o‘qib bo‘lmadi.", error);
-      }
-
-      return initialProjects.map(project => ({ ...project }));
+      } catch (e) { console.warn("Yuklab bo'lmadi:", e); }
+      return initialProjects.map(p => ({ ...p }));
     }
 
     function saveProjects() {
       try {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(projects));
         return true;
-      } catch (error) {
-        console.error("Ma’lumotni saqlab bo‘lmadi.", error);
-        showToast("Ma’lumotni saqlash imkoni bo‘lmadi.");
+      } catch (e) {
+        console.error("Saqlab bo'lmadi:", e);
+        showToast("Ma'lumotni saqlash imkoni bo'lmadi.", "error");
         return false;
       }
     }
 
+    /* ============ YORDAMCHI ============ */
     function formatMoney(amount) {
-      return money.format(amount) + " so‘m";
+      return money.format(amount) + " so'm";
+    }
+
+    function formatDate(ts) {
+      if (!ts) return "—";
+      const d = new Date(ts);
+      return d.toLocaleDateString("uz-UZ", { day: "2-digit", month: "short", year: "numeric" });
     }
 
     function escapeHTML(value) {
-      return String(value).replace(/[&<>"']/g, character => ({
-        "&": "&amp;",
-        "<": "&lt;",
-        ">": "&gt;",
-        '"': "&quot;",
-        "'": "&#039;"
-      })[character]);
+      return String(value).replace(/[&<>"']/g, c => ({
+        "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;"
+      })[c]);
     }
 
-    function showToast(message) {
-      const toast = document.getElementById("toast");
+    function showToast(message, type = "info", undoFn = null) {
+      toast.innerHTML = "";
+      toast.className = "toast show " + type;
 
-      toast.textContent = message;
-      toast.classList.add("show");
+      const text = document.createElement("span");
+      text.textContent = message;
+      toast.appendChild(text);
+
+      if (undoFn) {
+        const btn = document.createElement("button");
+        btn.className = "toast-undo";
+        btn.textContent = "Bekor qilish";
+        btn.addEventListener("click", () => {
+          undoFn();
+          toast.classList.remove("show");
+        });
+        toast.appendChild(btn);
+      }
 
       clearTimeout(toastTimer);
-
-      toastTimer = setTimeout(() => {
-        toast.classList.remove("show");
-      }, 2800);
+      toastTimer = setTimeout(() => toast.classList.remove("show"), undoFn ? 6000 : 3000);
     }
 
+    /* ============ ANIMATSIYA ============ */
+    function animateCount(el, target) {
+      const start = Number(el.dataset.count) || 0;
+      if (start === target) { el.dataset.count = target; return; }
+      const duration = 600;
+      const t0 = performance.now();
+      function tick(now) {
+        const p = Math.min((now - t0) / duration, 1);
+        const eased = 1 - Math.pow(1 - p, 3);
+        el.textContent = Math.round(start + (target - start) * eased);
+        if (p < 1) requestAnimationFrame(tick);
+        else { el.dataset.count = target; el.textContent = target; }
+      }
+      requestAnimationFrame(tick);
+    }
+
+    /* ============ STATISTIKA ============ */
     function updateStats() {
-      const totalRaised = projects.reduce(
-        (sum, project) => sum + project.raised, 0
-      );
+      const totalRaised = projects.reduce((s, p) => s + p.raised, 0);
+      const completed = projects.filter(p => p.raised >= p.goal).length;
 
-      const completed = projects.filter(
-        project => project.raised >= project.goal
-      ).length;
-
-      document.getElementById("projectCount").textContent = projects.length;
-      document.getElementById("totalRaised").textContent =
-        formatMoney(totalRaised);
-      document.getElementById("completedCount").textContent = completed;
+      animateCount($("projectCount"), projects.length);
+      animateCount($("completedCount"), completed);
+      $("totalRaised").textContent = formatMoney(totalRaised);
     }
 
+    /* ============ TOP LOYIHALAR ============ */
+    function renderTop() {
+      const top = [...projects]
+        .filter(p => p.raised > 0)
+        .sort((a, b) => b.raised - a.raised)
+        .slice(0, 5);
+
+      if (!top.length) {
+        $("topList").innerHTML = '<div class="empty">Hali mablag\' yig\'ilmagan.</div>';
+        return;
+      }
+
+      $("topList").innerHTML = top.map((p, i) => {
+        const medal = ["🥇", "🥈", "🥉", "4️⃣", "5️⃣"][i];
+        return `
+          <div class="top-item">
+            <span class="top-rank">${medal}</span>
+            <div class="top-info">
+              <strong>${escapeHTML(p.title)}</strong>
+              <small>${CATEGORY_ICONS[p.category] || "📌"} ${escapeHTML(p.category)}</small>
+            </div>
+            <span class="top-amount">${formatMoney(p.raised)}</span>
+          </div>
+        `;
+      }).join("");
+    }
+
+    /* ============ RENDER ============ */
     function renderProjects() {
       const query = searchInput.value.trim().toLocaleLowerCase("uz");
-      let filtered = projects.filter(project => {
-        const matchesSearch = (
-          project.title + " " +
-          project.category + " " +
-          project.description
-        ).toLocaleLowerCase("uz").includes(query);
 
-        const isCompleted = project.raised >= project.goal;
-
+      let filtered = projects.filter(p => {
+        const hay = (p.title + " " + p.category + " " + p.description)
+          .toLocaleLowerCase("uz");
+        const matchesSearch = hay.includes(query);
+        const isCompleted = p.raised >= p.goal;
         const matchesFilter =
           activeFilter === "all" ||
           (activeFilter === "active" && !isCompleted) ||
           (activeFilter === "completed" && isCompleted);
-
         return matchesSearch && matchesFilter;
       });
 
-      if (sortSelect.value === "progress") {
-        filtered.sort((a, b) =>
-          (b.raised / b.goal) - (a.raised / a.goal)
-        );
-      }
-
-      if (sortSelect.value === "needed") {
+      const sort = sortSelect.value;
+      if (sort === "progress") {
+        filtered.sort((a, b) => (b.raised / b.goal) - (a.raised / a.goal));
+      } else if (sort === "needed") {
         filtered.sort((a, b) => b.goal - a.goal);
+      } else if (sort === "newest") {
+        filtered.sort((a, b) => (b.createdAt || b.id) - (a.createdAt || a.id));
+      } else if (sort === "oldest") {
+        filtered.sort((a, b) => (a.createdAt || a.id) - (b.createdAt || b.id));
       }
 
       if (!filtered.length) {
-        projectList.innerHTML =
-          '<div class="empty">Mos loyiha topilmadi. Boshqa so‘z bilan qidiring.</div>';
+        projectList.innerHTML = `
+          <div class="empty">
+            <div class="empty-icon">🔎</div>
+            <p style="margin:0">Mos loyiha topilmadi. Boshqa so'z bilan qidiring.</p>
+          </div>`;
         updateStats();
+        renderTop();
         return;
       }
 
-      projectList.innerHTML = filtered.map(project => {
-        const completed = project.raised >= project.goal;
-        const percent = Math.min(
-          100, Math.round(project.raised / project.goal * 100)
-        );
+      projectList.innerHTML = filtered.map((p, i) => {
+        const completed = p.raised >= p.goal;
+        const percent = Math.min(100, Math.round(p.raised / p.goal * 100));
+        const icon = CATEGORY_ICONS[p.category] || "📌";
 
         return `
-          <article class="project-card">
+          <article class="project-card" style="animation-delay:${i * 0.05}s">
+            <button class="card-delete" data-delete="${p.id}" aria-label="O'chirish" title="O'chirish">🗑️</button>
+
             <span class="tag ${completed ? "" : "waiting"}">
-              ${completed ? "Maqsadga yetdi" : "Mablag‘ yig‘ilmoqda"}
+              ${completed ? "✅ Maqsadga yetdi" : "⏳ Mablag' yig'ilmoqda"}
             </span>
 
-            <h3>${escapeHTML(project.title)}</h3>
-            <p>${escapeHTML(project.description)}</p>
+            <h3>${escapeHTML(p.title)}</h3>
+            <p>${escapeHTML(p.description)}</p>
 
-            <p><strong>Kategoriya:</strong>
-              ${escapeHTML(project.category)}
-            </p>
+            <div class="card-meta">
+              <span>${icon} ${escapeHTML(p.category)}</span>
+              <span>📅 ${formatDate(p.createdAt)}</span>
+            </div>
 
-            <div class="progress" aria-label="Mablag‘ yig‘ilishi ${percent}%">
+            <div class="progress" aria-label="Mablag' yig'ilishi ${percent}%">
               <div style="width:${percent}%"></div>
             </div>
 
             <div class="amounts">
-              <span><strong>${formatMoney(project.raised)}</strong></span>
-              <span>${percent}% / ${formatMoney(project.goal)}</span>
+              <span><strong>${formatMoney(p.raised)}</strong></span>
+              <span>${percent}% / ${formatMoney(p.goal)}</span>
             </div>
 
-            <button
-              class="button ${completed ? "dark" : ""}"
-              data-invest="${project.id}"
-              ${completed ? "disabled" : ""}
-            >
-              ${completed ? "Maqsadga erishildi" : "Hissa qo‘shish"}
-            </button>
+            <div class="card-actions">
+              <button class="button ghost" data-detail="${p.id}"
+                style="background:var(--bg-soft);color:var(--text);border:none">
+                Batafsil
+              </button>
+              <button class="button ${completed ? "dark" : ""}"
+                data-invest="${p.id}" ${completed ? "disabled" : ""}>
+                ${completed ? "Yakunlangan" : "Hissa qo'shish"}
+              </button>
+            </div>
           </article>
         `;
       }).join("");
 
       updateStats();
+      renderTop();
     }
 
-    document.getElementById("filters").addEventListener("click", event => {
-      const button = event.target.closest("[data-filter]");
-
-      if (!button) return;
-
-      activeFilter = button.dataset.filter;
-
-      document.querySelectorAll(".filter").forEach(filter => {
-        filter.classList.toggle("active", filter === button);
-      });
-
+    /* ============ FILTRLAR ============ */
+    $("filters").addEventListener("click", e => {
+      const btn = e.target.closest("[data-filter]");
+      if (!btn) return;
+      activeFilter = btn.dataset.filter;
+      document.querySelectorAll(".filter").forEach(f =>
+        f.classList.toggle("active", f === btn)
+      );
       renderProjects();
     });
 
     searchInput.addEventListener("input", renderProjects);
     sortSelect.addEventListener("change", renderProjects);
 
-    projectList.addEventListener("click", event => {
-      const button = event.target.closest("[data-invest]");
+    /* ============ MODAL YORDAMCHILARI ============ */
+    function openModal(id) {
+      const m = $(id);
+      if (!m) return;
+      m.classList.add("open");
+      m.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+    }
 
-      if (!button) return;
+    function closeModal(id) {
+      const m = $(id);
+      if (!m) return;
+      m.classList.remove("open");
+      m.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+    }
 
-      const project = projects.find(
-        item => item.id === Number(button.dataset.invest)
-      );
+    document.querySelectorAll("[data-close-modal]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        btn.closest(".modal-overlay").classList.remove("open");
+        document.body.style.overflow = "";
+      });
+    });
 
-      if (!project || project.raised >= project.goal) return;
+    document.querySelectorAll(".modal-overlay").forEach(overlay => {
+      overlay.addEventListener("click", e => {
+        if (e.target === overlay) {
+          overlay.classList.remove("open");
+          document.body.style.overflow = "";
+        }
+      });
+    });
 
-      const answer = prompt(
-        "Demo hissa summasini so‘mda kiriting:"
-      );
+    document.addEventListener("keydown", e => {
+      if (e.key === "Escape") {
+        document.querySelectorAll(".modal-overlay.open").forEach(m => {
+          m.classList.remove("open");
+          document.body.style.overflow = "";
+        });
+      }
+      // "/" -> qidiruvga fokus
+      if (e.key === "/" && document.activeElement.tagName !== "INPUT" &&
+          document.activeElement.tagName !== "TEXTAREA") {
+        e.preventDefault();
+        searchInput.focus();
+        searchInput.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+    });
 
-      if (answer === null) return;
+    /* ============ HISSA QO'SHISH ============ */
+    projectList.addEventListener("click", e => {
+      const investBtn = e.target.closest("[data-invest]");
+      const detailBtn = e.target.closest("[data-detail]");
+      const deleteBtn = e.target.closest("[data-delete]");
 
-      const amount = Number(answer);
+      if (investBtn) {
+        const p = projects.find(x => x.id === Number(investBtn.dataset.invest));
+        if (!p || p.raised >= p.goal) return;
+        currentInvestId = p.id;
+        $("investProjectName").textContent = p.title;
+        $("investRemaining").textContent =
+          "Qoldi: " + formatMoney(p.goal - p.raised) +
+          " / Maqsad: " + formatMoney(p.goal);
+        $("investAmount").value = "";
+        $("investError").style.display = "none";
+        openModal("investModal");
+        setTimeout(() => $("investAmount").focus(), 150);
+      }
+
+      if (detailBtn) {
+        const p = projects.find(x => x.id === Number(detailBtn.dataset.detail));
+        if (!p) return;
+        const completed = p.raised >= p.goal;
+        const percent = Math.min(100, Math.round(p.raised / p.goal * 100));
+        const icon = CATEGORY_ICONS[p.category] || "📌";
+
+        $("detailTitle").textContent = p.title;
+        $("detailBody").innerHTML = `
+          <p style="margin-top:0">${escapeHTML(p.description)}</p>
+          <div class="detail-row"><span>Kategoriya</span><strong>${icon} ${escapeHTML(p.category)}</strong></div>
+          <div class="detail-row"><span>Yaratilgan</span><strong>${formatDate(p.createdAt)}</strong></div>
+          <div class="detail-row"><span>Maqsad</span><strong>${formatMoney(p.goal)}</strong></div>
+          <div class="detail-row"><span>Yig'ilgan</span><strong>${formatMoney(p.raised)}</strong></div>
+          <div class="detail-row"><span>Qoldi</span><strong>${formatMoney(Math.max(0, p.goal - p.raised))}</strong></div>
+          <div class="detail-row"><span>Holat</span><strong>${completed ? "✅ Yakunlangan" : "⏳ Faol"}</strong></div>
+          <div class="progress" style="margin-top:14px"><div style="width:${percent}%"></div></div>
+          <div class="modal-actions">
+            <button class="button outline" id="shareBtn">📤 Ulashish</button>
+            <button class="button ${completed ? "dark" : ""}" id="detailInvestBtn"
+              ${completed ? "disabled" : ""}>
+              ${completed ? "Yakunlangan" : "Hissa qo'shish"}
+            </button>
+          </div>
+        `;
+        openModal("detailModal");
+
+        $("shareBtn").addEventListener("click", async () => {
+          const text = `${p.title} — ${formatMoney(p.raised)} / ${formatMoney(p.goal)}. MahallaInvest`;
+          try {
+            if (navigator.share) {
+              await navigator.share({ title: p.title, text });
+            } else {
+              await navigator.clipboard.writeText(text);
+              showToast("Ma'lumot nusxalandi.", "success");
+            }
+          } catch (err) {
+            if (err.name !== "AbortError") {
+              showToast("Ulashish imkoni bo'lmadi.", "error");
+            }
+          }
+        });
+
+        $("detailInvestBtn").addEventListener("click", () => {
+          closeModal("detailModal");
+          setTimeout(() => investBtn?.click?.(), 0);
+          // Hissa modalini to'g'ridan-to'g'ri ochish
+          currentInvestId = p.id;
+          $("investProjectName").textContent = p.title;
+          $("investRemaining").textContent =
+            "Qoldi: " + formatMoney(p.goal - p.raised) +
+            " / Maqsad: " + formatMoney(p.goal);
+          $("investAmount").value = "";
+          $("investError").style.display = "none";
+          openModal("investModal");
+          setTimeout(() => $("investAmount").focus(), 150);
+        });
+      }
+
+      if (deleteBtn) {
+        const id = Number(deleteBtn.dataset.delete);
+        const p = projects.find(x => x.id === id);
+        if (!p) return;
+
+        if (!confirm(`"${p.title}" loyihasini o'chirishni tasdiqlaysizmi?`)) return;
+
+        const index = projects.indexOf(p);
+        lastDeleted = { project: p, index };
+
+        projects.splice(index, 1);
+
+        if (!saveProjects()) {
+          projects.splice(index, 0, p);
+          return;
+        }
+
+        renderProjects();
+        showToast(`"${p.title}" o'chirildi.`, "info", () => {
+          if (!lastDeleted) return;
+          projects.splice(lastDeleted.index, 0, lastDeleted.project);
+          lastDeleted = null;
+          saveProjects();
+          renderProjects();
+          showToast("Loyiha qaytarildi.", "success");
+        });
+      }
+    });
+
+    $("quickAmounts").addEventListener("click", e => {
+      const btn = e.target.closest("[data-quick]");
+      if (!btn) return;
+      const p = projects.find(x => x.id === currentInvestId);
+      if (!p) return;
+      const remaining = p.goal - p.raised;
+      if (btn.dataset.quick === "max") {
+        $("investAmount").value = remaining;
+      } else {
+        $("investAmount").value = Math.min(Number(btn.dataset.quick), remaining);
+      }
+    });
+
+    $("confirmInvest").addEventListener("click", () => {
+      const p = projects.find(x => x.id === currentInvestId);
+      if (!p) return;
+
+      const amount = Number($("investAmount").value);
+      const err = $("investError");
 
       if (!Number.isSafeInteger(amount) || amount <= 0) {
-        showToast("To‘g‘ri musbat butun summa kiriting.");
+        err.textContent = "To'g'ri musbat butun summa kiriting.";
+        err.style.display = "block";
         return;
       }
 
-      const contribution = Math.min(
-        amount, project.goal - project.raised
-      );
-
-      project.raised += contribution;
+      const contribution = Math.min(amount, p.goal - p.raised);
+      const oldRaised = p.raised;
+      p.raised += contribution;
 
       if (!saveProjects()) {
-        project.raised -= contribution;
+        p.raised = oldRaised;
         return;
       }
 
+      closeModal("investModal");
       renderProjects();
-
       showToast(
-        "Demo hisob yangilandi: " + formatMoney(contribution) +
-        ". Bu haqiqiy to‘lov emas."
+        "✓ Demo hisob yangilandi: " + formatMoney(contribution) +
+        ". Bu haqiqiy to'lov emas.", "success"
       );
     });
 
-    document.getElementById("projectForm").addEventListener("submit", event => {
-      event.preventDefault();
-
-      const form = event.currentTarget;
+    /* ============ YANGI LOYIHA FORMASI ============ */
+    $("projectForm").addEventListener("submit", e => {
+      e.preventDefault();
+      const form = e.currentTarget;
       const data = new FormData(form);
 
       const title = String(data.get("title")).trim();
@@ -832,52 +1737,146 @@
       const description = String(data.get("description")).trim();
       const goal = Number(data.get("goal"));
 
-      if (!title || !description ||
-          !Number.isSafeInteger(goal) || goal < 1000) {
-        showToast("Ma’lumotlarni tekshirib, qayta kiriting.");
+      let valid = true;
+      const mark = (id, bad) => {
+        const field = $(id).closest(".field");
+        if (field) field.classList.toggle("invalid", bad);
+        if (bad) valid = false;
+      };
+
+      mark("title", title.length < 3);
+      mark("category", !category);
+      mark("goal", !Number.isSafeInteger(goal) || goal < 1000);
+      mark("description", description.length < 10);
+
+      if (!valid) {
+        showToast("Formada xatolar bor. Tekshirib qayta kiriting.", "error");
         return;
       }
 
       const project = {
         id: Date.now(),
-        title,
-        category,
-        description,
-        goal,
-        raised: 0
+        title, category, description, goal,
+        raised: 0,
+        createdAt: Date.now()
       };
 
       projects.unshift(project);
 
-      if (!saveProjects()) {
-        projects.shift();
-        return;
-      }
+      if (!saveProjects()) { projects.shift(); return; }
 
       form.reset();
+      form.querySelectorAll(".field.invalid").forEach(f =>
+        f.classList.remove("invalid")
+      );
       activeFilter = "all";
-
-      document.querySelectorAll(".filter").forEach(button => {
-        button.classList.toggle(
-          "active", button.dataset.filter === "all"
-        );
-      });
-
+      document.querySelectorAll(".filter").forEach(b =>
+        b.classList.toggle("active", b.dataset.filter === "all")
+      );
       searchInput.value = "";
       sortSelect.value = "default";
 
       renderProjects();
-      showToast("Yangi loyiha demo tarzda qo‘shildi.");
+      showToast("✓ Yangi loyiha demo tarzda qo'shildi.", "success");
 
-      document.getElementById("projects").scrollIntoView({
-        behavior: "smooth"
-      });
+      $("projects").scrollIntoView({ behavior: "smooth" });
     });
 
-    document.getElementById("year").textContent =
-      new Date().getFullYear();
+    /* ============ EKSPORT / IMPORT / RESET ============ */
+    $("exportBtn").addEventListener("click", () => {
+      try {
+        const data = JSON.stringify(projects, null, 2);
+        const blob = new Blob([data], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `mahallainvest-${new Date().toISOString().slice(0, 10)}.json`;
+        a.click();
+        URL.revokeObjectURL(url);
+        showToast("Loyihalar eksport qilindi.", "success");
+      } catch (e) {
+        showToast("Eksport imkoni bo'lmadi.", "error");
+      }
+    });
 
-    renderProjects();
+    $("importBtn").addEventListener("click", () => $("importFile").click());
+
+    $("importFile").addEventListener("change", e => {
+      const file = e.target.files?.[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = ev => {
+        try {
+          const parsed = JSON.parse(ev.target.result);
+          if (!Array.isArray(parsed)) throw new Error("Not array");
+
+          const validItems = parsed.filter(p =>
+            p && typeof p.title === "string" &&
+            typeof p.goal === "number" && typeof p.raised === "number"
+          );
+          if (!validItems.length) throw new Error("No valid items");
+
+          if (!confirm(`${validItems.length} ta loyiha import qilinsinmi? Mavjud ma'lumotlar almashtiriladi.`)) return;
+
+          projects = validItems;
+          saveProjects();
+          renderProjects();
+          showToast(`${validItems.length} ta loyiha import qilindi.`, "success");
+        } catch (err) {
+          showToast("Fayl formati noto'g'ri.", "error");
+        }
+      };
+      reader.readAsText(file);
+      e.target.value = "";
+    });
+
+    $("resetBtn").addEventListener("click", () => {
+      if (!confirm("Barcha loyihalar boshlang'ich holatga qaytariladi. Davom etasizmi?")) return;
+      projects = initialProjects.map(p => ({ ...p }));
+      saveProjects();
+      renderProjects();
+      showToast("Boshlang'ich holatga qaytarildi.", "success");
+    });
+
+    /* ============ TUNGI REJIM ============ */
+    function applyTheme(theme) {
+      document.documentElement.setAttribute("data-theme", theme);
+      $("themeToggle").textContent = theme === "dark" ? "☀️" : "🌙";
+      try { localStorage.setItem(THEME_KEY, theme); } catch (e) {}
+    }
+
+    $("themeToggle").addEventListener("click", () => {
+      const current = document.documentElement.getAttribute("data-theme");
+      applyTheme(current === "dark" ? "light" : "dark");
+    });
+
+    /* ============ MOBIL MENYU ============ */
+    $("hamburger").addEventListener("click", () => {
+      const nav = $("mainNav");
+      const open = nav.classList.toggle("open");
+      $("hamburger").setAttribute("aria-expanded", String(open));
+    });
+
+    $("mainNav").addEventListener("click", e => {
+      if (e.target.tagName === "A") {
+        $("mainNav").classList.remove("open");
+        $("hamburger").setAttribute("aria-expanded", "false");
+      }
+    });
+
+    /* ============ INIT ============ */
+    (function init() {
+      let savedTheme = "light";
+      try {
+        savedTheme = localStorage.getItem(THEME_KEY) ||
+          (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+      } catch (e) {}
+      applyTheme(savedTheme);
+
+      projects = loadProjects();
+      $("year").textContent = new Date().getFullYear();
+      renderProjects();
+    })();
   </script>
 </body>
 </html>
